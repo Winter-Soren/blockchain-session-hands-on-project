@@ -11,14 +11,13 @@ const other = {
   type: 'group',
   children: [
     {
-      id: 'sample-page',
-      title: 'Sample Page',
+      id: 'home',
+      title: 'Home',
       type: 'item',
-      url: '/sample-page',
+      url: '/home',
       icon: icons.IconBrandChrome,
       breadcrumbs: false
-    },
-    
+    }
   ]
 };
 

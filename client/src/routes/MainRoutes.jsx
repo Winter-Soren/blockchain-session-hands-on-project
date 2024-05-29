@@ -6,9 +6,10 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
+const CampaignDetails = Loadable(lazy(() => import('views/Campaign-Details')));
 
 // sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const Home = Loadable(lazy(() => import('views/home')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -30,8 +31,12 @@ const MainRoutes = {
       ]
     },
     {
-      path: '/sample-page',
-      element: <SamplePage />
+      path: '/home',
+      element: <Home />
+    },
+    {
+      path: '/campaign-details/:title',
+      element: <CampaignDetails />
     }
   ]
 };

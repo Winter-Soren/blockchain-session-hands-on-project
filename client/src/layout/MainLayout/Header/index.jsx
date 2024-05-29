@@ -15,6 +15,9 @@ import ProfileSection from './ProfileSection';
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
 
+// thirdweb
+import { ConnectWallet } from '@thirdweb-dev/react';
+
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = ({ handleLeftDrawerToggle }) => {
@@ -63,8 +66,9 @@ const Header = ({ handleLeftDrawerToggle }) => {
       <Box sx={{ flexGrow: 1 }} />
 
       {/* notification & profile */}
-      <NotificationSection />
-      <ProfileSection />
+      {/* <NotificationSection /> */}
+      {/* <ProfileSection /> */}
+      <ConnectWallet />
     </>
   );
 };

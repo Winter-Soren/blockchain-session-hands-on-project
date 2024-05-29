@@ -12,7 +12,7 @@ import { MENU_OPEN } from 'store/actions';
 
 const LogoSection = () => {
   return (
-    <Button disableRipple  component={Link} to={config.defaultPath}>
+    <Button disableRipple component={Link} to={config.defaultPath}>
       <Logo />
     </Button>
   );
