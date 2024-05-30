@@ -62,14 +62,14 @@ const Home = () => {
         {!isLoading &&
           campaigns.length > 0 &&
           campaigns.map((campaign) => (
-            <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
+            <Grid item xs={12} sm={6} md={3} key={uuidv4()}>
               <FundCard
                 title={campaign.title}
                 description={campaign.description}
                 image={campaign.image}
                 target={campaign.target}
                 amountCollected={campaign.amountCollected}
-                handleClick={() => handleNavigate(campaign)} // Define this function if needed
+                handleClick={() => handleNavigate(campaign)}
               />
             </Grid>
           ))}
