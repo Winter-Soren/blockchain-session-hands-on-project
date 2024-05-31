@@ -8,6 +8,7 @@ import Loadable from 'ui-component/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 const CampaignDetails = Loadable(lazy(() => import('views/Campaign-Details')));
 const CreateCampaign = Loadable(lazy(() => import('views/create-campaign')));
+const Profile = Loadable(lazy(() => import('views/profile')));
 
 // sample page routing
 const Home = Loadable(lazy(() => import('views/home')));
@@ -42,6 +43,10 @@ const MainRoutes = {
     {
       path: '/create-campaign',
       element: <CreateCampaign />
+    },
+    {
+      path: '/profile',
+      element: <Profile />
     }
   ]
 };

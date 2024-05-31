@@ -10,15 +10,14 @@ import useCrowdFundingContract from 'hooks/useCrowdFundingContract';
 import { useEffect, useState } from 'react';
 
 import parseCampaigns from 'utils/parse-campaigns';
-import checkDeadline from 'utils/check-deadline';
-import FundCard from './fund-card';
 import { useNavigate } from 'react-router-dom';
 import { useAddress } from '@thirdweb-dev/react';
+import FundCard from 'views/home/fund-card';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-const Home = () => {
-  const { contract, isLoading, error } = useCrowdFundingContract();
+const Profile = () => {
+  const { contract, isLoading } = useCrowdFundingContract();
   const navigate = useNavigate();
   const address = useAddress();
   console.log('address', address);
@@ -27,9 +26,11 @@ const Home = () => {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        if (contract) {
+        if (contract && address) {
           const campaigns = await contract.call('getCampaigns');
-          setCampaigns(checkDeadline(parseCampaigns(campaigns)));
+          const allCampaigns = parseCampaigns(campaigns);
+          const myCampaigns = allCampaigns.filter((campaign) => campaign.owner === address);
+          setCampaigns(myCampaigns);
 
           console.log('Campaigns:', parseCampaigns(campaigns));
         }
@@ -47,7 +48,7 @@ const Home = () => {
 
   if (!address) {
     return (
-      <MainCard title="Home">
+      <MainCard title="Profile">
         <Typography variant="h6" color="textPrimary">
           Please connect your wallet to view campaigns.
         </Typography>
@@ -56,9 +57,9 @@ const Home = () => {
   }
 
   return (
-    <MainCard title="Home">
+    <MainCard title="Profile">
       <Typography variant="h6" color="textPrimary">
-        ({campaigns.length})
+        Your total Campaigns ({campaigns.length})
       </Typography>
 
       <Grid container spacing={3} sx={{ marginTop: 2 }}>
@@ -93,4 +94,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Profile;

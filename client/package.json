@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://berrydashboard.io/",
   "scripts": {
-    "start": "env-cmd -f .env vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",

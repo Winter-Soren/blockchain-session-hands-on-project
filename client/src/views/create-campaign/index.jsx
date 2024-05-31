@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import { useContractWrite, useStorageUpload, useContract, useAddress } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 import MainCard from 'ui-component/cards/MainCard';
 import useCrowdFundingContract from 'hooks/useCrowdFundingContract';
+import moment from 'moment';
+import { FileUploader } from 'react-drag-drop-files';
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
-  const { contract,  error } = useCrowdFundingContract();
+  const { contract, error } = useCrowdFundingContract();
   const { mutateAsync: upload } = useStorageUpload();
   const address = useAddress();
   const { mutateAsync: createCampaign } = useContractWrite(contract, 'createCampaign');
@@ -25,16 +27,15 @@ const CreateCampaign = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
 
+  const fileTypes = ['JPG', 'PNG', 'GIF'];
+
   const handleFormFieldChange = (fieldName, e) => {
     setForm({ ...form, [fieldName]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
-    }
+  const handleImageChange = (file) => {
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const uploadImage = async () => {
@@ -68,7 +69,7 @@ const CreateCampaign = () => {
       console.log('contract call success', data);
 
       console.log('New campaign created:', newCampaign);
-      navigate('/'); // Redirect after successful creation
+      navigate('/home');
     } catch (error) {
       console.error('Error creating campaign:', error);
     } finally {
@@ -77,82 +78,92 @@ const CreateCampaign = () => {
   };
 
   const getTodayDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    return moment().format('YYYY-MM-DD');
   };
+
+  if (!address) {
+    return (
+      <MainCard title="Create Campaign">
+        <Typography variant="h6" color="textPrimary">
+          Please connect your wallet to create a campaign.
+        </Typography>
+      </MainCard>
+    );
+  }
 
   return (
     <MainCard title="Create Campaign">
-      <Box>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Name"
-            variant="outlined"
-            margin="normal"
-            value={form.name}
-            onChange={(e) => handleFormFieldChange('name', e)}
-          />
-          <TextField
-            fullWidth
-            label="Title"
-            variant="outlined"
-            margin="normal"
-            value={form.title}
-            onChange={(e) => handleFormFieldChange('title', e)}
-          />
-          <TextField
-            fullWidth
-            label="Description"
-            variant="outlined"
-            margin="normal"
-            multiline
-            rows={4}
-            value={form.description}
-            onChange={(e) => handleFormFieldChange('description', e)}
-          />
-          <TextField
-            fullWidth
-            label="Target Amount (ETH)"
-            variant="outlined"
-            margin="normal"
-            value={form.target}
-            onChange={(e) => handleFormFieldChange('target', e)}
-          />
-          <TextField
-            fullWidth
-            label="Deadline"
-            variant="outlined"
-            margin="normal"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            inputProps={{ min: getTodayDate() }}
-            value={form.deadline}
-            onChange={(e) => handleFormFieldChange('deadline', e)}
-          />
-          <Button variant="contained" component="label" sx={{ mt: 2, mb: 2 }}>
-            Upload Image
-            <input type="file" hidden accept="image/*" onChange={handleImageChange} />
-          </Button>
-          {imagePreview && (
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
             <Box sx={{ mt: 2, mb: 2 }}>
-              <Typography variant="body1">Image Preview:</Typography>
-              <img src={imagePreview} alt="Preview" style={{ width: '100%', borderRadius: '8px' }} />
+              <FileUploader handleChange={handleImageChange} name="image" types={fileTypes} multiple={false} />
             </Box>
-          )}
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-            <Button variant="contained" color="primary" type="submit" disabled={isLoading} sx={{ mr: 2 }}>
-              {isLoading ? <CircularProgress size={24} /> : 'Create Campaign'}
-            </Button>
-            <Button variant="outlined" onClick={() => navigate('/')}>
-              Cancel
-            </Button>
-          </Box>
-        </form>
-      </Box>
+            {imagePreview && (
+              <Box sx={{ mt: 2, mb: 2 }}>
+                <Typography variant="body1">Image Preview:</Typography>
+                <img src={imagePreview} alt="Preview" style={{ width: '100%', borderRadius: '8px' }} />
+              </Box>
+            )}
+          </Grid>
+
+          <Grid item md={6} sm={12}>
+            <TextField
+              fullWidth
+              label="Name"
+              variant="outlined"
+              margin="normal"
+              value={form.name}
+              onChange={(e) => handleFormFieldChange('name', e)}
+            />
+            <TextField
+              fullWidth
+              label="Title"
+              variant="outlined"
+              margin="normal"
+              value={form.title}
+              onChange={(e) => handleFormFieldChange('title', e)}
+            />
+            <TextField
+              fullWidth
+              label="Description"
+              variant="outlined"
+              margin="normal"
+              multiline
+              rows={4}
+              value={form.description}
+              onChange={(e) => handleFormFieldChange('description', e)}
+            />
+            <TextField
+              fullWidth
+              label="Target Amount (ETH)"
+              variant="outlined"
+              margin="normal"
+              value={form.target}
+              onChange={(e) => handleFormFieldChange('target', e)}
+            />
+            <TextField
+              fullWidth
+              label="Deadline"
+              variant="outlined"
+              margin="normal"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: getTodayDate() }}
+              value={form.deadline}
+              onChange={(e) => handleFormFieldChange('deadline', e)}
+            />
+          </Grid>
+        </Grid>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Button variant="contained" color="primary" type="submit" disabled={isLoading} sx={{ mr: 2 }}>
+            {isLoading ? <CircularProgress size={24} /> : 'Create Campaign'}
+          </Button>
+          <Button variant="outlined" onClick={() => navigate('/')}>
+            Cancel
+          </Button>
+        </Box>
+      </form>
     </MainCard>
   );
 };

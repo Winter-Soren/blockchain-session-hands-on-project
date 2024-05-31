@@ -1,8 +1,8 @@
 // assets
-import { IconBrandChrome, IconHelp, IconPencil } from '@tabler/icons-react';
+import { IconBrandChrome, IconHelp, IconPencil, IconUser } from '@tabler/icons-react';
 
 // constant
-const icons = { IconBrandChrome, IconHelp, IconPencil };
+const icons = { IconBrandChrome, IconHelp, IconPencil, IconUser };
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
@@ -24,6 +24,14 @@ const other = {
       type: 'item',
       url: '/create-campaign',
       icon: icons.IconPencil,
+      breadcrumbs: false
+    },
+    {
+      id: 'profile',
+      title: 'Profile',
+      type: 'item',
+      url: '/profile',
+      icon: icons.IconUser,
       breadcrumbs: false
     }
   ]
