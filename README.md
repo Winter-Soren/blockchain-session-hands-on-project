@@ -1,4 +1,3 @@
-Certainly! Here's the further revised version of your instructions:
 
 # Blockchain Hands-On Project
 
