@@ -25,7 +25,6 @@ const CreateCampaign = () => {
     image: ''
   });
   const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
 
   const fileTypes = ['JPG', 'PNG', 'GIF'];
 
@@ -35,7 +34,7 @@ const CreateCampaign = () => {
 
   const handleImageChange = (file) => {
     setImageFile(file);
-    setImagePreview(URL.createObjectURL(file));
+    console.log("file url: ",URL.createObjectURL(file))
   };
 
   const uploadImage = async () => {
@@ -99,10 +98,10 @@ const CreateCampaign = () => {
             <Box sx={{ mt: 2, mb: 2 }}>
               <FileUploader handleChange={handleImageChange} name="image" types={fileTypes} multiple={false} />
             </Box>
-            {imagePreview && (
+            {imageFile && (
               <Box sx={{ mt: 2, mb: 2 }}>
                 <Typography variant="body1">Image Preview:</Typography>
-                <img src={imagePreview} alt="Preview" style={{ width: '100%', borderRadius: '8px' }} />
+                <img src={URL.createObjectURL(imageFile)} alt="Preview" style={{ width: '100%', borderRadius: '8px' }} />
               </Box>
             )}
           </Grid>
@@ -111,8 +110,6 @@ const CreateCampaign = () => {
             <TextField
               fullWidth
               label="Name"
-              variant="outlined"
-              margin="normal"
               value={form.name}
               onChange={(e) => handleFormFieldChange('name', e)}
             />

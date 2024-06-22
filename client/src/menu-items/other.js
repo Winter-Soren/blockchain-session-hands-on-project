@@ -1,10 +1,7 @@
 // assets
 import { IconBrandChrome, IconHelp, IconPencil, IconUser } from '@tabler/icons-react';
 
-// constant
-const icons = { IconBrandChrome, IconHelp, IconPencil, IconUser };
-
-// ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
+// ==============================|| MENU ITEMS ||============================== //
 
 const other = {
   id: 'sample-docs-roadmap',
@@ -15,7 +12,7 @@ const other = {
       title: 'Home',
       type: 'item',
       url: '/home',
-      icon: icons.IconBrandChrome,
+      icon: IconBrandChrome,
       breadcrumbs: false
     },
     {
@@ -23,7 +20,7 @@ const other = {
       title: 'Create Campaign',
       type: 'item',
       url: '/create-campaign',
-      icon: icons.IconPencil,
+      icon: IconPencil,
       breadcrumbs: false
     },
     {
@@ -31,7 +28,7 @@ const other = {
       title: 'Profile',
       type: 'item',
       url: '/profile',
-      icon: icons.IconUser,
+      icon: IconUser,
       breadcrumbs: false
     }
   ]

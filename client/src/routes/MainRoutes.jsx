@@ -6,11 +6,11 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
+
+// campaign routing
 const CampaignDetails = Loadable(lazy(() => import('views/Campaign-Details')));
 const CreateCampaign = Loadable(lazy(() => import('views/create-campaign')));
 const Profile = Loadable(lazy(() => import('views/profile')));
-
-// sample page routing
 const Home = Loadable(lazy(() => import('views/home')));
 
 // ==============================|| MAIN ROUTING ||============================== //
